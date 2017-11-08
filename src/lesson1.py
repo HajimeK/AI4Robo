@@ -100,23 +100,23 @@ def show(p):
 # (within a tolerance of +/- 0.001 for each entry)
 
 
-# colors = [['R','G','G','R','R'],
-#           ['R','R','G','R','R'],
-#           ['R','R','G','G','R'],
-#           ['R','R','R','R','R']]
-# measurements = ['G','G','G','G','G']
-# motions = [[0,0],[0,1],[1,0],[1,0],[0,1]]
-# p = localize(colors,measurements,motions,sensor_right = 0.7, p_move = 0.8)
-# show(p) # displays your answer
+colors = [['R','G','G','R','R'],
+          ['R','R','G','R','R'],
+          ['R','R','G','G','R'],
+          ['R','R','R','R','R']]
+measurements = ['G','G','G','G','G']
+motions = [[0,0],[0,1],[1,0],[1,0],[0,1]]
+p = localize(colors,measurements,motions,sensor_right = 0.7, p_move = 0.8)
+show(p) # displays your answer
 
 #added
-colors = [['R', 'G'],
-          ['R', 'R'],
-          ['G', 'R'],
-          ['R', 'G'],
-          ['G', 'G']]
-measurements = ['R', 'R', 'G', 'G', 'G', 'R']
-motions = [[0, 0], [-1, 0], [0, 1], [0, -1], [0, 1], [1, 0]]
-p = localize(colors,measurements,motions,sensor_right = 0.99, p_move = 0.97)
-show(p) # displays your answer
+# colors = [['R', 'G'],
+#           ['R', 'R'],
+#           ['G', 'R'],
+#           ['R', 'G'],
+#           ['G', 'G']]
+# measurements = ['R', 'R', 'G', 'G', 'G', 'R']
+# motions = [[0, 0], [-1, 0], [0, 1], [0, -1], [0, 1], [1, 0]]
+# p = localize(colors,measurements,motions,sensor_right = 0.99, p_move = 0.97)
+# show(p) # displays your answer
 
