@@ -114,15 +114,28 @@ def eval(r, p):
 
 ####   DON'T MODIFY ANYTHING ABOVE HERE! ENTER CODE BELOW ####
 
-myrobot = robot()
+#myrobot = robot()
 
 # coordinates 30, 50 heading north (pi/2).
 # Have your robot turn clockwise by pi/2, move
 # 15 m, and sense. Then have it turn clockwise
 # by pi/2 again, move 10 m, and sense again.
 
-myrobot.set(30.0, 50.0, pi/2)
-myrobot = myrobot.move(-pi/2, 15.0)
-print myrobot.sense()
-myrobot = myrobot.move(-pi/2, 10.0)
-print myrobot.sense()
+# myrobot.set(30.0, 50.0, pi/2)
+# myrobot.set_noise(5.0, 0.1, 5.0)
+# myrobot = myrobot.move(-pi/2, 15.0)
+# print myrobot.sense()
+# myrobot = myrobot.move(-pi/2, 10.0)
+# print myrobot.sense()
+myrobot = robot()
+myrobot = myrobot.move(0.1, 5.0)
+Z = myrobot.sense()
+
+N = 1000
+p = [robot() for i in range(N)]
+for indivisual_robot in p:
+    indivisual_robot.set_noise(0.05, 0.05, 5.0)
+p = list(map(lambda indivisual_robot : indivisual_robot.move(0.1, 5.0), p ))
+w = list(map(lambda indivisual_robot : indivisual_robot.measurement_prob(Z), p ))
+
+print w
