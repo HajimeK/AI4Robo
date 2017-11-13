@@ -108,7 +108,7 @@ for i in range(N):
     x.set_noise(0.05, 0.05, 5.0)
     p.append(x)
     
-T = 5
+T = 2
 
 for t in range(T):
     myrobot = myrobot.move(0.1, 5.0)
