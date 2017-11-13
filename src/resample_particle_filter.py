@@ -1,23 +1,17 @@
-# Make a robot called myrobot that starts at
-# coordinates 30, 50 heading north (pi/2).
-# Have your robot turn clockwise by pi/2, move
-# 15 m, and sense. Then have it turn clockwise
-# by pi/2 again, move 10 m, and sense again.
-#
-# Your program should print out the result of
-# your two sense measurements.
-#
-# Don't modify the code below. Please enter
-# your code at the bottom.
+# In this exercise, try to write a program that
+# will resample particles according to their weights.
+# Particles with higher weights should be sampled
+# more frequently (in proportion to their weight).
+
+# Don't modify anything below. Please scroll to the 
+# bottom to enter your code.
 
 from math import *
 import random
-
-
+from Carbon.TextEdit import HITTESTHook
 
 landmarks  = [[20.0, 20.0], [80.0, 80.0], [20.0, 80.0], [80.0, 20.0]]
 world_size = 100.0
-
 
 class robot:
     def __init__(self):
@@ -94,50 +88,82 @@ class robot:
             prob *= self.Gaussian(dist, self.sense_noise, measurement[i])
         return prob
     
-    
-    
     def __repr__(self):
         return '[x=%.6s y=%.6s orient=%.6s]' % (str(self.x), str(self.y), str(self.orientation))
 
 
-
-def eval(r, p):
-    sum = 0.0;
-    for i in range(len(p)): # calculate mean error
-        dx = (p[i].x - r.x + (world_size/2.0)) % world_size - (world_size/2.0)
-        dy = (p[i].y - r.y + (world_size/2.0)) % world_size - (world_size/2.0)
-        err = sqrt(dx * dx + dy * dy)
-        sum += err
-    return sum / float(len(p))
-
-
-
-####   DON'T MODIFY ANYTHING ABOVE HERE! ENTER CODE BELOW ####
-
 #myrobot = robot()
+#myrobot.set_noise(5.0, 0.1, 5.0)
+#myrobot.set(30.0, 50.0, pi/2)
+#myrobot = myrobot.move(-pi/2, 15.0)
+#print myrobot.sense()
+#myrobot = myrobot.move(-pi/2, 10.0)
+#print myrobot.sense()
 
-# coordinates 30, 50 heading north (pi/2).
-# Have your robot turn clockwise by pi/2, move
-# 15 m, and sense. Then have it turn clockwise
-# by pi/2 again, move 10 m, and sense again.
-
-# myrobot.set(30.0, 50.0, pi/2)
-# myrobot.set_noise(5.0, 0.1, 5.0)
-# myrobot = myrobot.move(-pi/2, 15.0)
-# print myrobot.sense()
-# myrobot = myrobot.move(-pi/2, 10.0)
-# print myrobot.sense()
 myrobot = robot()
 myrobot = myrobot.move(0.1, 5.0)
 Z = myrobot.sense()
 
 N = 1000
-p = [robot() for i in range(N)]
-for indivisual_robot in p:
-    indivisual_robot.set_noise(0.05, 0.05, 5.0)
-p = list(map(lambda indivisual_robot : indivisual_robot.move(0.1, 5.0), p ))
-w = list(map(lambda indivisual_robot : indivisual_robot.measurement_prob(Z), p ))
-W = sum(w)
-alpha = list(map(lambda w_element : w_element/W, w ))
+p = []
+for i in range(N):
+    x = robot()
+    x.set_noise(0.05, 0.05, 5.0)
+    p.append(x)
 
-print alpha
+p2 = []
+for i in range(N):
+    p2.append(p[i].move(0.1, 5.0))
+p = p2
+
+w = []
+for i in range(N):
+    w.append(p[i].measurement_prob(Z))
+
+
+#### DON'T MODIFY ANYTHING ABOVE HERE! ENTER CODE BELOW ####
+# You should make sure that p3 contains a list with particles
+# resampled according to their weights.
+# Also, DO NOT MODIFY p
+p3 = []
+# W = sum(w)
+# w_new = list(map(lambda w : w/W, w ))
+# for i in range(N):
+#     watermark = 0.
+#     j = 0
+#     hit = random.random()
+#     for j in range(N):
+#         if hit > watermark:
+#             watermark += w_new[j]
+#         else:
+#             break
+# 
+#     p3.append(p[j-1])
+
+index = int(random.random() * N)
+beta = 0.0
+mw = max(w)
+for i in range(N):
+    beta += random.random() * 2.0 *mw
+    while beta > w[index]:
+        beta -= w[index]
+        index = (index + 1) % N
+    p3.append(p[index])
+
+p = p3
+print p
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
